@@ -1,47 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import SideBar from "../components/SideBar"
-import Card from "../components/Card"
-import { useSearchParams } from 'react-router-dom'
-import api from '../api'
-
+import { useSearchParams } from "react-router-dom";
+import Card from "../components/Card";
+import Sidebar from "../components/Sidebar";
+import { useEffect, useState } from "react";
+import api from "../api/index";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
 
 const Feed = () => {
+    const [videos, setVideos] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const [videos, setIsVideos] = useState(null)
-    const [loading, setIsLoading] = useState(true)
-    const [error, setIsError] = useState(null)
-
-    const selectedCat = searchParams.get("category")
     const [searchParams] = useSearchParams();
+    const selectedCat = searchParams.get("category");
 
     useEffect(() => {
-        const url =
-            !selectedCat ? "/home"
-                : selectedCat === "trending"
-                    ? "/trending"
-                    : `/search?query=${selectedCat}`
+        const url = !selectedCat
+            ? "/home"
+            : selectedCat === "trending"
+                ? "/trending"
+                : `/search?query=${selectedCat}`;
 
-        setIsLoading(true)
-
+        setIsLoading(true);
         api
             .get(url)
-            .then((res) => console.log(res.data.data))
-            .catch((err) => console.log(err.message))
+            .then((res) => setVideos(res.data.data))
+            .catch((err) => setError(err.message))
             .finally(() => setIsLoading(false));
-    }, [selectedCat])
-
+    }, [selectedCat]);
     return (
-        <div className='flex'>
-
-            <SideBar selectedCat={selectedCat} />
-
-            <div>
-                <Card />
-                <Card />
-                <Card />
+        <div className="flex">
+            <Sidebar selectedCat={selectedCat} />
+            <div className="videos">
+                {isLoading ? (
+                    <Loader />
+                ) : error ? (
+                    <Error />
+                ) : (
+                    videos.map((i) => (
+                        i.type === "video" && <Card key={i.videoId} video={i} />
+                    ))
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Feed
+export default Feed;

@@ -11,6 +11,7 @@ This is a YouTube Clone built with React. It replicates the core functionality a
 ![](youtube.gif)
 
 ##  Libraries
+- Tailwind
 - millify
 - moment
 - react-player

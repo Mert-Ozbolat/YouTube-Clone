@@ -30,10 +30,10 @@ const Detail = () => {
                 <div>
                     <div className="h-[30vh] md:h-[50vh] lg:h-[60vh] rounded overflow-hidden">
                         <ReactPlayer
-                            //   playing={true}
+                            playing={true}
+                            controls
                             height={"100%"}
                             width={"100%"}
-                            controls
                             url={`https://www.youtube.com/watch?v=${id}`}
                         />
                     </div>

@@ -5,7 +5,7 @@ import { millify } from 'millify';
 
 const Channel = ({ video }) => {
     return (
-        <div className='flex justify-center max-sm:flex-col'>
+        <div className='flex justify-between max-sm:flex-col'>
             <div className='flex items-center gap-2 sm:gap-4 max-sm:justify-between'>
                 <div className='flex'>
                     <img className='rounded-full size-10 sm:size-12' src={video.channelThumbnail[0].url} alt="" />
